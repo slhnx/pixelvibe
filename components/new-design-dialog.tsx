@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-// @ts-ignore
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
