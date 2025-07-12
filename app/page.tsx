@@ -7,6 +7,7 @@ import { ArrowRightIcon } from "lucide-react";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { motion } from "motion/react";
 import Link from "next/link";
+import { SignInButton } from "@clerk/nextjs";
 
 const titleVariant = {
   initial: { opacity: 0, y: -15, filter: "blur(40px)" },
@@ -97,11 +98,11 @@ const Page = () => {
           </h1>
         </div>
         <div className="flex items-center gap-2 sm:gap-4">
-          <Link href="/auth">
+          <SignInButton forceRedirectUrl="/dashboard">
             <Button variant="secondary" size="sm" className="sm:size-default">
               Login
             </Button>
-          </Link>
+          </SignInButton>
           <ThemeToggle />
         </div>
       </motion.header>
@@ -158,14 +159,14 @@ const Page = () => {
           transition={{ delay: 0.5, duration: 0.6, ease: "easeInOut" }}
           className="flex items-center gap-4 justify-center mt-6 sm:mt-4"
         >
-          <Link href="/auth">
+          <SignInButton forceRedirectUrl="/dashboard">
             <Button
               size="lg"
               className="text-base sm:text-lg px-6 sm:px-8 py-3 sm:py-4"
             >
               Get Started
             </Button>
-          </Link>
+          </SignInButton>
         </motion.div>
       </motion.div>
     </motion.main>
