@@ -1,0 +1,80 @@
+export const presetDimensions = [
+  {
+    label: "Instagram Post",
+    value: "instagram-post",
+    width: 1080,
+    height: 1080,
+  },
+  {
+    label: "Instagram Story",
+    value: "instagram-story",
+    width: 1080,
+    height: 1920,
+  },
+  {
+    label: "Facebook Post",
+    value: "facebook-post",
+    width: 1200,
+    height: 630,
+  },
+  {
+    label: "Facebook Cover",
+    value: "facebook-cover",
+    width: 1640,
+    height: 859,
+  },
+  {
+    label: "Twitter Post",
+    value: "twitter-post",
+    width: 1200,
+    height: 675,
+  },
+  {
+    label: "Twitter Header",
+    value: "twitter-header",
+    width: 1500,
+    height: 500,
+  },
+  {
+    label: "YouTube Thumbnail",
+    value: "youtube-thumbnail",
+    width: 1280,
+    height: 720,
+  },
+  {
+    label: "YouTube Banner",
+    value: "youtube-banner",
+    width: 2560,
+    height: 1440,
+  },
+  {
+    label: "LinkedIn Post",
+    value: "linkedin-post",
+    width: 1200,
+    height: 627,
+  },
+  {
+    label: "Pinterest Pin",
+    value: "pinterest-pin",
+    width: 1000,
+    height: 1500,
+  },
+  {
+    label: "A4 Document",
+    value: "a4-document",
+    width: 2480,
+    height: 3508,
+  },
+  {
+    label: "Business Card",
+    value: "business-card",
+    width: 1050,
+    height: 600,
+  },
+  {
+    label: "Custom",
+    value: "custom",
+    width: 0,
+    height: 0,
+  },
+];

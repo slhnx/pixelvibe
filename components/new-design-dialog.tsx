@@ -2,9 +2,6 @@
 
 import { useState } from "react";
 // @ts-ignore
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -22,90 +19,14 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
+import { presetDimensions } from "@/lib/constants";
+// @ts-ignore
+import { zodResolver } from "@hookform/resolvers/zod";
 import { Plus } from "lucide-react";
-
-const presetDimensions = [
-  {
-    label: "Instagram Post (1080 × 1080)",
-    value: "instagram-post",
-    width: 1080,
-    height: 1080,
-  },
-  {
-    label: "Instagram Story (1080 × 1920)",
-    value: "instagram-story",
-    width: 1080,
-    height: 1920,
-  },
-  {
-    label: "Facebook Post (1200 × 630)",
-    value: "facebook-post",
-    width: 1200,
-    height: 630,
-  },
-  {
-    label: "Facebook Cover (1640 × 859)",
-    value: "facebook-cover",
-    width: 1640,
-    height: 859,
-  },
-  {
-    label: "Twitter Post (1200 × 675)",
-    value: "twitter-post",
-    width: 1200,
-    height: 675,
-  },
-  {
-    label: "Twitter Header (1500 × 500)",
-    value: "twitter-header",
-    width: 1500,
-    height: 500,
-  },
-  {
-    label: "YouTube Thumbnail (1280 × 720)",
-    value: "youtube-thumbnail",
-    width: 1280,
-    height: 720,
-  },
-  {
-    label: "YouTube Banner (2560 × 1440)",
-    value: "youtube-banner",
-    width: 2560,
-    height: 1440,
-  },
-  {
-    label: "LinkedIn Post (1200 × 627)",
-    value: "linkedin-post",
-    width: 1200,
-    height: 627,
-  },
-  {
-    label: "Pinterest Pin (1000 × 1500)",
-    value: "pinterest-pin",
-    width: 1000,
-    height: 1500,
-  },
-  {
-    label: "A4 Document (2480 × 3508)",
-    value: "a4-document",
-    width: 2480,
-    height: 3508,
-  },
-  {
-    label: "Business Card (1050 × 600)",
-    value: "business-card",
-    width: 1050,
-    height: 600,
-  },
-];
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+import DimensionSelector from "./dimension-selector";
 
 const formSchema = z
   .object({
@@ -153,6 +74,15 @@ const NewDesignDialog = () => {
   const watchDimensionType = form.watch("dimensionType");
   const isCustomSelected = watchDimensionType === "custom";
 
+  const handleDimensionSelect = (value: string) => {
+    form.setValue("dimensionType", value);
+    // Clear custom dimensions when switching away from custom
+    if (value !== "custom") {
+      form.setValue("customWidth", "");
+      form.setValue("customHeight", "");
+    }
+  };
+
   const onSubmit = (values: z.infer<typeof formSchema>) => {
     let finalDimensions;
 
@@ -189,7 +119,7 @@ const NewDesignDialog = () => {
           Create New Design
         </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[425px]">
+      <DialogContent className="min-w-[1200px]">
         <DialogHeader>
           <DialogTitle>Create New Design</DialogTitle>
           <DialogDescription>
@@ -218,25 +148,13 @@ const NewDesignDialog = () => {
               name="dimensionType"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Dimensions</FormLabel>
-                  <Select
-                    onValueChange={field.onChange}
-                    defaultValue={field.value}
-                  >
-                    <FormControl>
-                      <SelectTrigger className="w-full">
-                        <SelectValue placeholder="Select dimensions" />
-                      </SelectTrigger>
-                    </FormControl>
-                    <SelectContent>
-                      {presetDimensions.map((preset) => (
-                        <SelectItem key={preset.value} value={preset.value}>
-                          {preset.label}
-                        </SelectItem>
-                      ))}
-                      <SelectItem value="custom">Custom</SelectItem>
-                    </SelectContent>
-                  </Select>
+                  <FormLabel className="mb-4">Dimensions</FormLabel>
+                  <div className="px-8">
+                    <DimensionSelector
+                      field={field}
+                      handleDimensionSelect={handleDimensionSelect}
+                    />
+                  </div>
                   <FormMessage />
                 </FormItem>
               )}
