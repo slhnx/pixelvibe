@@ -12,5 +12,6 @@ export default defineSchema({
   workspaces: defineTable({
     name: v.string(),
     owner: v.id('users'),
+    isActive: v.boolean()
   })
 });
