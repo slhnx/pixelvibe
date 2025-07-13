@@ -38,7 +38,7 @@ import {
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
-import { useUser } from "@clerk/nextjs";
+import { SignOutButton, useUser } from "@clerk/nextjs";
 import { ThemeToggle } from "./theme-toggle";
 
 const items = [
@@ -165,10 +165,12 @@ const AppSidebar = () => {
                     </DropdownMenuSubContent>
                   </DropdownMenuSub>
                   <DropdownMenuSeparator />
-                  <DropdownMenuItem>
-                    <LogOut className="mr-2 h-4 w-4" />
-                    <span>Logout</span>
-                  </DropdownMenuItem>
+                  <SignOutButton>
+                    <DropdownMenuItem className="text-red-400">
+                      <LogOut className="mr-2 h-4 w-4 text-red-400" />
+                      <span>Logout</span>
+                    </DropdownMenuItem>
+                  </SignOutButton>
                 </DropdownMenuContent>
               </DropdownMenu>
               <ThemeToggle />

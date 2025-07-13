@@ -1,11 +1,11 @@
 "use client";
-import { ProgressProvider } from "@bprogress/next/app";
-import * as React from "react";
-import { ThemeProvider as NextThemesProvider } from "next-themes";
-import { ClerkProvider } from "@clerk/nextjs";
 import "@bprogress/core/css";
-import ConvexClientProvider from "./convex-provider";
+import { ProgressProvider } from "@bprogress/next/app";
+import { ClerkProvider } from "@clerk/nextjs";
 import { dark } from "@clerk/themes";
+import { ThemeProvider as NextThemesProvider } from "next-themes";
+import * as React from "react";
+import ConvexClientProvider from "./convex-provider";
 
 const Providers = ({ children }: { children: React.ReactNode }) => {
   return (

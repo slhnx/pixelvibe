@@ -44,7 +44,7 @@ const DimensionSelector = ({
               className={cn(
                 "cursor-pointer border-2",
                 field.value == dimension.value
-                  ? "border-primary/40 bg-neutral-800 shadow-lg"
+                  ? "border-primary/40 dark:bg-neutral-800 bg-neutral-100 shadow-lg"
                   : "hover:border-primary/40"
               )}
               onClick={() => handleDimensionSelect(dimension.value)}
