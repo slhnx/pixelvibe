@@ -26,6 +26,13 @@ import { Plus } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import DimensionSelector from "./dimension-selector";
+import { useMutation } from "@tanstack/react-query";
+import { useConvexMutation } from "@convex-dev/react-query";
+import { api } from "@/convex/_generated/api";
+import { Doc, Id } from "@/convex/_generated/dataModel";
+import { useWorkspaceStore } from "@/store/workspace";
+import { useRouter } from "next/navigation";
+import { useUser } from "@clerk/nextjs";
 
 const formSchema = z
   .object({
@@ -58,7 +65,17 @@ const formSchema = z
   );
 
 const NewDesignDialog = () => {
+  const { user } = useUser();
   const [open, setOpen] = useState(false);
+  const activeWorkspace = useWorkspaceStore((state) => state.activeWorkspace);
+  const router = useRouter();
+
+  const { isPending, mutate: createDesign } = useMutation({
+    mutationFn: useConvexMutation(api.design.createDesign),
+    onSuccess: (id: string) => {
+      router.push(`/design/${id}`);
+    },
+  });
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -85,10 +102,12 @@ const NewDesignDialog = () => {
   const onSubmit = (values: z.infer<typeof formSchema>) => {
     let finalDimensions;
 
-    if (values.dimensionType === "custom") {
+    const { designName, dimensionType, customHeight, customWidth } = values;
+
+    if (dimensionType === "custom") {
       finalDimensions = {
-        width: Number(values.customWidth),
-        height: Number(values.customHeight),
+        width: Number(customWidth),
+        height: Number(customHeight),
       };
     } else {
       const preset = presetDimensions.find(
@@ -99,13 +118,17 @@ const NewDesignDialog = () => {
         : null;
     }
 
-    console.log("Form submitted:", {
-      designName: values.designName,
-      dimensions: finalDimensions,
-    });
+    const design = {
+      title: designName,
+      workspace: activeWorkspace?._id as Id<"workspaces">,
+      data: null,
+      createdBy: user?.id as string,
+      height: finalDimensions?.height as number,
+      width: finalDimensions?.width as number,
+    };
 
-    // Here you would typically create the design
-    // For now, we'll just close the dialog and reset the form
+    createDesign(design);
+
     setOpen(false);
     form.reset();
   };
@@ -209,7 +232,9 @@ const NewDesignDialog = () => {
               >
                 Cancel
               </Button>
-              <Button type="submit">Create</Button>
+              <Button type="submit" isLoading={isPending}>
+                Create
+              </Button>
             </div>
           </form>
         </Form>
