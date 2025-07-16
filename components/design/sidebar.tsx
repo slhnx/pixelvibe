@@ -1,7 +1,7 @@
 "use client";
 
+import { AnimatePresence, motion } from "framer-motion";
 import { useState } from "react";
-import { motion, AnimatePresence, hover } from "framer-motion";
 
 import {
   Tooltip,
@@ -9,7 +9,9 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { ToolOption, toolOptions } from "@/lib/constants";
-import TextPanel from "./settings/text";
+import { useShowAttributes } from "@/store/attribute-panel";
+import TextPanel from "./panels/text";
+import TextAttributes from "./attr/text";
 
 const panelVariants = {
   hidden: {
@@ -25,6 +27,7 @@ const panelVariants = {
 };
 
 const DesignSidebar = () => {
+  const attributes = useShowAttributes();
   const [hoveredTool, setHoveredTool] = useState<string | null>(null);
 
   const getToolPanel = (hoveredTool: ToolOption | undefined) => {
@@ -90,12 +93,26 @@ const DesignSidebar = () => {
                     </div>
                   </div>
 
-                  <div>
-                    {getToolPanel(tool)}
-                  </div>
+                  <div>{getToolPanel(tool)}</div>
                 </div>
               );
             })()}
+          </motion.div>
+        )}
+      </AnimatePresence>
+      <AnimatePresence>
+        {attributes.showAttrFor === "text" && (
+          <motion.div
+            className="fixed left-24 top-24 w-80 h-fit py-4 px-2 rounded-xl bg-card border border-ring/30 z-40 shadow-xl shadow-secondary/30"
+            initial="hidden"
+            animate="visible"
+            exit="hidden"
+            variants={panelVariants}
+            transition={{ duration: 0.3, ease: "easeInOut" }}
+            onMouseEnter={() => setHoveredTool(hoveredTool)}
+            onMouseLeave={() => setHoveredTool(null)}
+          >
+            <TextAttributes />
           </motion.div>
         )}
       </AnimatePresence>

@@ -11,8 +11,10 @@ import { useEffect, useRef } from "react";
 import { Skeleton } from "../ui/skeleton";
 import { useCanvasStore } from "@/store/canvas";
 import "@/app/fonts.css";
+import { useShowAttributes } from "@/store/attribute-panel";
 
 const Canvas = () => {
+  const attributes = useShowAttributes();
   const containerRef = useRef<HTMLDivElement | null>(null);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
@@ -42,6 +44,17 @@ const Canvas = () => {
       width: design.width * newScale,
       height: design.height * newScale,
       backgroundColor: "#fff",
+    });
+
+    canvas.on("selection:created", () => {
+      const active = canvas.getActiveObject();
+      if (active?.type === "textbox") {
+        attributes.setShowAttrFor("text");
+      }
+    });
+
+    canvas.on("selection:cleared", () => {
+      attributes.setShowAttrFor(null);
     });
 
     canvas.renderAll();
