@@ -1,4 +1,4 @@
-import { mutation } from "./_generated/server";
+import { mutation, query } from "./_generated/server";
 import { v } from "convex/values";
 
 export const createDesign = mutation({
@@ -30,5 +30,21 @@ export const createDesign = mutation({
       height,
       width,
     });
+  },
+});
+
+export const getDesign = query({
+  args: {
+    designId: v.id("design"),
+  },
+  handler: async (ctx, args) => {
+    const { designId } = args;
+
+    const design = await ctx.db
+      .query("design")
+      .filter((q) => q.eq(q.field("_id"), designId))
+      .collect();
+
+    return design[0];
   },
 });
