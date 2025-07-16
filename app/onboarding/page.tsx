@@ -11,7 +11,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { api } from "@/convex/_generated/api";
 import { Id } from "@/convex/_generated/dataModel";
-import useStoreUserEffect from "@/hooks/useStoreUserEffect";
+import useStoreUserEffect from "@/hooks/use-store-user-effect";
 import { useUser } from "@clerk/nextjs";
 import { useConvexMutation } from "@convex-dev/react-query";
 import { zodResolver } from "@hookform/resolvers/zod";
