@@ -31,7 +31,6 @@ const TextPanel = () => {
     if (props.isHeading) {
       textStyles.fontSize =
         headingFontSizes[props.heading as keyof typeof headingFontSizes];
-      textStyles.fontWeight = "bold";
     }
 
     const textbox = new fabric.Textbox("Enter text here", {

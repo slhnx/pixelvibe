@@ -4,14 +4,14 @@ import { api } from "@/convex/_generated/api";
 import { Id } from "@/convex/_generated/dataModel";
 import { convexQuery } from "@convex-dev/react-query";
 
+import "@/app/fonts.css";
+import { useShowAttributes } from "@/store/attribute-panel";
+import { useCanvasStore } from "@/store/canvas";
 import { useQuery } from "@tanstack/react-query";
 import * as fabric from "fabric";
 import { useParams } from "next/navigation";
 import { useEffect, useRef } from "react";
 import { Skeleton } from "../ui/skeleton";
-import { useCanvasStore } from "@/store/canvas";
-import "@/app/fonts.css";
-import { useShowAttributes } from "@/store/attribute-panel";
 
 const Canvas = () => {
   const attributes = useShowAttributes();
@@ -46,7 +46,7 @@ const Canvas = () => {
       backgroundColor: "#fff",
     });
 
-    canvas.on("selection:created", () => {
+    canvas.on("selection:updated", () => {
       const active = canvas.getActiveObject();
       if (active?.type === "textbox") {
         attributes.setShowAttrFor("text");

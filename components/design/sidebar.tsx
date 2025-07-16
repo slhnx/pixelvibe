@@ -10,8 +10,8 @@ import {
 } from "@/components/ui/tooltip";
 import { ToolOption, toolOptions } from "@/lib/constants";
 import { useShowAttributes } from "@/store/attribute-panel";
-import TextPanel from "./panels/text";
-import TextAttributes from "./attr/text";
+import TextPanel from "./object-panels/text";
+import TextAttributes from "./attr-panels/text";
 
 const panelVariants = {
   hidden: {
@@ -103,7 +103,7 @@ const DesignSidebar = () => {
       <AnimatePresence>
         {attributes.showAttrFor === "text" && (
           <motion.div
-            className="fixed left-24 top-24 w-80 h-fit py-4 px-2 rounded-xl bg-card border border-ring/30 z-40 shadow-xl shadow-secondary/30"
+            className="fixed right-[0.8rem] top-24 w-80 h-fit py-4 px-2 rounded-xl bg-card border border-ring/30 z-40 shadow-xl shadow-secondary/30"
             initial="hidden"
             animate="visible"
             exit="hidden"

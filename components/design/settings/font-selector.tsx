@@ -7,9 +7,9 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Label } from "./ui/label";
+import { Label } from "@/components/ui/label";
 // import { FONTS } from "@/lib/constants";
-import { ScrollArea } from "./ui/scroll-area";
+import { ScrollArea } from "@/components/ui/scroll-area";
 import { useCanvasStore } from "@/store/canvas";
 import { FONTS } from "@/lib/constants";
 import { useEffect, useState } from "react";
@@ -25,6 +25,7 @@ const FontSelector = () => {
     if (activeObject && activeObject.type === "textbox") {
       activeObject.set("fontFamily", font);
       fabricCanvas?.requestRenderAll();
+      setFont(font);
     }
   };
 
