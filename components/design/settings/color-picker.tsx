@@ -6,14 +6,21 @@ import {
 } from "@/components/ui/popover";
 import { useCanvas } from "@/hooks/use-canvas";
 import { isText } from "@/lib/utils";
-import { hsvaToHex } from "@uiw/color-convert";
+import { hexToHsva, hsvaToHex } from "@uiw/color-convert";
 import Colorful from "@uiw/react-color-colorful";
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const ColorPicker = () => {
   const [hsva, setHsva] = useState({ h: 0, s: 0, v: 68, a: 1 });
   const { fabricCanvas, activeObject } = useCanvas();
+
+  useEffect(() => {
+    if (activeObject && activeObject.type === "textbox") {
+      const textColor = activeObject.get("fill");
+      setHsva(hexToHsva(textColor));
+    }
+  }, [activeObject]);
 
   return (
     <Popover>
