@@ -46,6 +46,13 @@ const Canvas = () => {
       backgroundColor: "#fff",
     });
 
+    canvas.on("selection:created", () => {
+      const active = canvas.getActiveObject();
+      if (active?.type === "textbox") {
+        attributes.setShowAttrFor("text");
+      }
+    });
+
     canvas.on("selection:updated", () => {
       const active = canvas.getActiveObject();
       if (active?.type === "textbox") {
