@@ -8,14 +8,10 @@ import { Minus, Plus } from "lucide-react";
 import { useEffect, useState } from "react";
 
 const FontSizeSelector = () => {
-  const [fontSize, setFontSize] = useState(12);
   const { fabricCanvas, activeObject } = useCanvas();
-
-  useEffect(() => {
-    if (isText(activeObject)) {
-      setFontSize(activeObject?.get("fontSize"));
-    }
-  }, []);
+  const [fontSize, setFontSize] = useState(
+    (activeObject?.get("fontSize") as number) || 12
+  );
 
   useEffect(() => {
     if (isText(activeObject)) {
@@ -28,12 +24,16 @@ const FontSizeSelector = () => {
     <div className="flex gap-2 mt-4">
       <Button
         variant="outline"
-        onClick={() => setFontSize((fontSize) => fontSize - 4)}
+        disabled={fontSize == 1}
+        onClick={() =>
+          setFontSize((fontSize) => (fontSize - 4 > 0 ? fontSize - 4 : 1))
+        }
       >
         <Minus />
       </Button>
       <Input
         type="number"
+        min={0}
         value={fontSize}
         onChange={(e) => setFontSize(parseInt(e.target.value))}
         className="w-16"
