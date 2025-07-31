@@ -21,7 +21,6 @@ const TextPanel = () => {
     const textStyles: Partial<fabric.TextboxProps> = {
       left: 200,
       top: 200,
-      width: props.isHeading ? 450 : 200,
       fontSize: 16,
       fontFamily: "Inter",
       fill: "#000000",
