@@ -25,11 +25,11 @@ const ColorPicker = () => {
   return (
     <Popover>
       <PopoverTrigger asChild className="mt-4">
-        <Button variant="ghost" className="rounded-full">
+        <Button variant="outline">
           <Image
             src="/color-picker-dark.svg"
-            height={20}
-            width={20}
+            height={14}
+            width={14}
             alt="color-picker"
           />
         </Button>
